@@ -1,4 +1,3 @@
-# %%
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -6,7 +5,6 @@ import locale
 
 locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
 
-# %%
 # Downloading contents of the web page
 years = ['2019-2020', '2020-2021', '2021-2022', '2022-2023']
 url = {
@@ -22,7 +20,6 @@ data = {
     '2022-2023': requests.get(url['2022-2023']).text
 }
 
-# %%
 # Defining of the dataframe
 table_class = "hh-salaries-ranking-table hh-salaries-table-sortable responsive"
 
