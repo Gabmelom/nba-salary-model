@@ -29,7 +29,7 @@ table_class = "hh-salaries-ranking-table hh-salaries-table-sortable responsive"
 for year in years:
     soup = BeautifulSoup(data[year], 'html.parser')
     table = soup.find('table', {'class': table_class})
-    df = pd.DataFrame(columns=['Player', year, year+'(*)'])
+    df = pd.DataFrame(columns=['Player', 'Salary', 'Salary (adjusted)'])
 
     # Collecting Ddata
     for row in table.tbody.find_all('tr'):    
@@ -41,9 +41,9 @@ for year in years:
             salary = columns[2].text.strip().strip("$").replace(',', '')
             salary_inflation = columns[3].text.strip().strip("$").replace(',', '')
 
-            df = df._append({'Player': player, year: salary, year+'(*)': salary_inflation}, ignore_index=True)
+            df = df._append({'Player': player, 'Salary': salary, 'Salary (adjusted)': salary_inflation}, ignore_index=True)
 
     # Exporting the dataframe to a csv file
-    df.to_csv('nba_salaries_'+year+'.csv', index=False)
+    df.to_csv(f'data/raw/salaries/{year}.csv', index=False)
 
 
