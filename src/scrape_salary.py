@@ -6,18 +6,18 @@ import locale
 locale.setlocale(locale.LC_ALL, 'en_US.UTF8')
 
 # Downloading contents of the web page
-years = ['2019-2020', '2020-2021', '2021-2022', '2022-2023']
+years = ['2020', '2021', '2022', '2023']
 url = {
-    '2019-2020': 'https://hoopshype.com/salaries/players/2019-2020/',
-    '2020-2021': 'https://hoopshype.com/salaries/players/2020-2021/',
-    '2021-2022': 'https://hoopshype.com/salaries/players/2021-2022/',
-    '2022-2023': 'https://hoopshype.com/salaries/players/2022-2023/'
+    '2020': 'https://hoopshype.com/salaries/players/2019-2020/',
+    '2021': 'https://hoopshype.com/salaries/players/2020-2021/',
+    '2022': 'https://hoopshype.com/salaries/players/2021-2022/',
+    '2023': 'https://hoopshype.com/salaries/players/2022-2023/'
 }
 data = {
-    '2019-2020': requests.get(url['2019-2020']).text,
-    '2020-2021': requests.get(url['2020-2021']).text,
-    '2021-2022': requests.get(url['2021-2022']).text,
-    '2022-2023': requests.get(url['2022-2023']).text
+    '2020': requests.get(url['2020']).text,
+    '2021': requests.get(url['2021']).text,
+    '2022': requests.get(url['2022']).text,
+    '2023': requests.get(url['2023']).text
 }
 
 # Defining of the dataframe
