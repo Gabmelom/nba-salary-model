@@ -5,4 +5,5 @@ Salaries (other) - https://www.espn.com/nba/salaries
 Stats - https://www.basketball-reference.com/leagues/NBA_2021_totals.html
 Stats (other) - official NBA website
 
-2kratings OVERALL - https://hoopshype.com/nba2k/2018-2019/
+2k ratings OVERALL - https://hoopshype.com/nba2k/2018-2019/
+2k ratings json - https://github.com/MikeYan01/nba2k-player-ratings/
