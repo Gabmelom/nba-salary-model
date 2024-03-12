@@ -7,7 +7,7 @@ years = ['20','21','22','23']
 for year in years:
     data_folder = os.path.join(os.getcwd(),'data', 'clean')
     ratings = pd.read_csv(os.path.join(data_folder, '2k ratings','2k'+year+'_clean.csv'))
-    salary = pd.read_csv(os.path.join(data_folder, 'salaries','salary.csv'))
+    salary = pd.read_csv(os.path.join(data_folder, 'salaries',f'20{year}.csv'))
     stats = pd.read_csv(os.path.join(data_folder, 'stats',f'{str(int(year)-1)}-{year} Regular.csv'))
 
     # Join ratings and stats by player name
@@ -23,12 +23,12 @@ for year in years:
     missing.to_csv('20'+year+'_missing_stats.csv', index=False)
 
     # Add salary to the joined table
-    ratings_salary_stats = ratings_stats.merge(salary, left_on='name', right_on='player', how='inner')
-    ratings_salary_stats = ratings_salary_stats.drop(columns=['player'])
+    ratings_salary_stats = ratings_stats.merge(salary, left_on='name', right_on='Player', how='inner')
+    ratings_salary_stats = ratings_salary_stats.drop(columns=['Player'])
 
     # Save players that didn't match between joined stats and salary
     ratings_stats_names = ratings_stats['name'].values
-    salary_names = salary['player'].values
+    salary_names = salary['Player'].values
     missing_salary_names = list(set(ratings_stats_names) - set(salary_names))
 
     missing_salary = ratings_stats[ratings_stats['name'].isin(missing_salary_names)]
