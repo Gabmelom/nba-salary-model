@@ -3,6 +3,9 @@ import os
 
 years = ['20','21','22','23']
 
+def outputFolder(filename):
+    return os.path.join(os.getcwd(),'data', 'joined', filename)
+
 # Join every year's tables
 for year in years:
     data_folder = os.path.join(os.getcwd(),'data', 'clean')
@@ -20,7 +23,7 @@ for year in years:
     stats_names = stats['Player'].values
     missing_names = list(set(ratings_names) - set(stats_names))
     missing = ratings[ratings['name'].isin(missing_names)]
-    missing.to_csv('20'+year+'_missing_stats.csv', index=False)
+    missing.to_csv(outputFolder('20'+year+'_missing.csv'), index=False)
 
     # Add salary to the joined table
     ratings_salary_stats = ratings_stats.merge(salary, left_on='name', right_on='Player', how='inner')
@@ -32,7 +35,7 @@ for year in years:
     missing_salary_names = list(set(ratings_stats_names) - set(salary_names))
 
     missing_salary = ratings_stats[ratings_stats['name'].isin(missing_salary_names)]
-    missing_salary.to_csv('20'+year+'_missing_salaries.csv', index=False)
+    missing_salary.to_csv(outputFolder('20'+year+'_missing_salary.csv'), index=False)
 
     # Rename columns based on glossary
     glossary = {
@@ -45,17 +48,17 @@ for year in years:
         'MP': 'Minutes Played',
         'FG': 'Field Goals',
         'FGA': 'Field Goal Attempts',
-        'FG%': 'Field Goal Percentage',
+        'FG%': 'Field Goal %',
         '3P': '3-Point Field Goals',
         '3PA': '3-Point Field Goal Attempts',
-        '3P%': '3-Point Field Goal Percentage',
+        '3P%': '3-Point Field Goal %',
         '2P': '2-Point Field Goals',
         '2PA': '2-point Field Goal Attempts',
-        '2P%': '2-Point Field Goal Percentage',
-        'eFG%': 'Effective Field Goal Percentage',
+        '2P%': '2-Point Field Goal %',
+        'eFG%': 'Effective Field Goal %',
         'FT': 'Free Throws',
         'FTA': 'Free Throw Attempts',
-        'FT%': 'Free Throw Percentage',
+        'FT%': 'Free Throw %',
         'ORB': 'Offensive Rebounds',
         'DRB': 'Defensive Rebounds',
         'TRB': 'Total Rebounds',
@@ -66,10 +69,12 @@ for year in years:
         'PF': 'Personal Fouls',
         'PTS': 'Points'
     }
-    ratings_salary_stats = ratings_salary_stats.rename(columns=glossary)
+    glossary_lower = {k: v.lower().replace(' ','_') for k, v in glossary.items()}
+    ratings_salary_stats = ratings_salary_stats.rename(columns=glossary_lower)
+    ratings_salary_stats = ratings_salary_stats.rename(columns={'Salary': 'salary', 'Salary (adjusted)': 'salary_adjusted'})
 
-    # Drop 'Rank' and 'Position' columns
-    ratings_salary_stats = ratings_salary_stats.drop(columns=['Rank', 'Position'])
+    # Drop misc columns
+    ratings_salary_stats = ratings_salary_stats.drop(columns=['rank', 'position', 'team'])
 
     # Save the joined table
-    ratings_salary_stats.to_csv('20'+year+'_joined.csv', index=False)
+    ratings_salary_stats.to_csv(outputFolder('20'+year+'_joined.csv'), index=False)
