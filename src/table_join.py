@@ -34,5 +34,42 @@ for year in years:
     missing_salary = ratings_stats[ratings_stats['name'].isin(missing_salary_names)]
     missing_salary.to_csv('20'+year+'_missing_salaries.csv', index=False)
 
+    # Rename columns based on glossary
+    glossary = {
+        'Rk': 'Rank',
+        'Pos': 'Position',
+        'Age': 'Age',
+        'Tm': 'Team',
+        'G': 'Games',
+        'GS': 'Games Started',
+        'MP': 'Minutes Played',
+        'FG': 'Field Goals',
+        'FGA': 'Field Goal Attempts',
+        'FG%': 'Field Goal Percentage',
+        '3P': '3-Point Field Goals',
+        '3PA': '3-Point Field Goal Attempts',
+        '3P%': '3-Point Field Goal Percentage',
+        '2P': '2-Point Field Goals',
+        '2PA': '2-point Field Goal Attempts',
+        '2P%': '2-Point Field Goal Percentage',
+        'eFG%': 'Effective Field Goal Percentage',
+        'FT': 'Free Throws',
+        'FTA': 'Free Throw Attempts',
+        'FT%': 'Free Throw Percentage',
+        'ORB': 'Offensive Rebounds',
+        'DRB': 'Defensive Rebounds',
+        'TRB': 'Total Rebounds',
+        'AST': 'Assists',
+        'STL': 'Steals',
+        'BLK': 'Blocks',
+        'TOV': 'Turnovers',
+        'PF': 'Personal Fouls',
+        'PTS': 'Points'
+    }
+    ratings_salary_stats = ratings_salary_stats.rename(columns=glossary)
+
+    # Drop 'Rank' and 'Position' columns
+    ratings_salary_stats = ratings_salary_stats.drop(columns=['Rank', 'Position'])
+
     # Save the joined table
     ratings_salary_stats.to_csv('20'+year+'_joined.csv', index=False)
