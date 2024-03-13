@@ -72,9 +72,9 @@ for year in years:
     glossary_lower = {k: v.lower().replace(' ','_') for k, v in glossary.items()}
     ratings_salary_stats = ratings_salary_stats.rename(columns=glossary_lower)
     ratings_salary_stats = ratings_salary_stats.rename(columns={'Salary': 'salary', 'Salary (adjusted)': 'salary_adjusted'})
+    ratings_salary_stats = ratings_salary_stats.drop(columns=['rank', 'team','position','secondary_position'])
 
-    # Drop misc columns
-    ratings_salary_stats = ratings_salary_stats.drop(columns=['rank', 'position', 'team'])
+    ratings_salary_stats['height'] = ratings_salary_stats['height'].apply(lambda x: int(x.split('\'')[0])*12 + int(x.split('\'')[1]))
 
     # Save the joined table
     ratings_salary_stats.to_csv(outputFolder('20'+year+'_joined.csv'), index=False)
