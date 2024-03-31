@@ -3,3 +3,6 @@ Lib
 Scripts
 pyvenv.cfg
 share
+src/basketball_reference_stats
+src/hoopshype_2k_overall
+src/hoopshype_salaries
